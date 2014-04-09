@@ -4,6 +4,7 @@ app.directive('kitten', function() {
 
   return {
       restrict: 'E',
+      scope: {},
       template: "<img src='http://{{domain}}/{{width}}/{{height}}'>",
       link: function (scope, element, attr) {
           scope.domain = "placekitten.com";
@@ -12,9 +13,9 @@ app.directive('kitten', function() {
 
           element.on('click', function(){
             scope.$apply(function(){
-              image.addClass('animated tada');
+              element.find('img').addClass('animated tada');
               scope.domain = 'placebeard.it';
-            })
+            });
           });
       }
   };
