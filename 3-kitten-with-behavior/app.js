@@ -8,20 +8,20 @@ app.directive('kitten', function() {
 
   return {
       restrict: 'E',
-      replace: true,
       template: "<img src='http://placekitten.com/100'>",
       link: function (scope, element, attr) {
           var url = "http://placekitten.com/";
           var source = placeholderURL(url, attr.width, attr.height);
+          var image = element.find("img");
 
-          element.attr('src', source);
+          image.attr('src', source);
 
           element.on('click', function(){
             var url = 'http://www.placebeard.it/';
             var source = placeholderURL(url, attr.width, attr.height);
 
-            element.addClass('animated tada');
-            element.attr('src', source);
+            image.addClass('animated tada');
+            image.attr('src', source);
           });
       }
   };

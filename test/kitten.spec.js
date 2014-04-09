@@ -1,43 +1,42 @@
 'use strict';
 
 describe('kitten', function(){
-  var $compile = null;
-  var $scope   = null;
-  var template = null;
+  var $compile;
+  var $scope;
+  var template;
 
-  // mock our app
+  // setup our app for testing
   beforeEach(module("myApp"));
 
-  // this is was Angular usually does when it bootstraps an app
-  beforeEach(inject(function($injector) {
-    $compile = $injector.get("$compile");
-    $scope = $injector.get("$rootScope").$new();
-    template = '<div><kitten></kitten></div>';
+  // inject services required for testing the directive
+  beforeEach(inject(function(_$compile_, _$rootScope_) {
+    $compile = _$compile_;
+    $scope = _$rootScope_.$new();
+    template = '<kitten></kitten>';
   }));
 
-  var $output = function() {
+  var render = function() {
     return $compile(template)($scope);
   };
 
   it("replaces <kitten> tag with an image tag", function() {
-    var output = $output();
-    expect(output.find("img").length).toEqual(1);
-    expect(output.find("kitten").length).toEqual(0);
+    expect(render().find("img").length).toEqual(1);
+    expect(render().find("kitten").length).toEqual(0);
   });
 
   it("has a source attribute", function() {
-    var image = $output().find("img");
+    var image = render().find("img");
     expect(image.attr("src").length).toBeGreaterThan(1);
   });
 
   it("defaults to the width and height of '100'", function() {
-    var image = $output().find("img");
+    var image = render().find("img");
     expect(image.attr("src")).toEqual("http://placekitten.com/100/")
   });
 
   it("uses given height and width attributes", function() {
     template = '<div><kitten width="200" height="100"></kitten></div>';
-    var image = $output().find("img");
+    var image = render().find("img");
     expect(image.attr("src")).toEqual("http://placekitten.com/200/100")
   });
 

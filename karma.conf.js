@@ -35,8 +35,7 @@ module.exports = function(config) {
     plugins: [
       'karma-jasmine',
       'karma-chrome-launcher',
-      'karma-html-reporter',
-      'karma-mp3-reporter'
+      'karma-html-reporter'
     ],
 
 
@@ -50,16 +49,11 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['html', 'mp3'],
+    reporters: ['progress', 'html'],
 
     htmlReporter: {
       outputDir: 'test/results',
       templatePath: 'test/lib/jasmine_template.html'
-    },
-
-    mp3Reporter: {
-      red:        'test/lib/sounds/fail.mp3',         // in case of 'fail' or 'error'
-      green:      'test/lib/sounds/success.mp3',       // in case of 'success'
     },
 
     // web server port
