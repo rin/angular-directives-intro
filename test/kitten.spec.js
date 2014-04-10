@@ -3,15 +3,17 @@
 describe('kitten', function(){
   var $compile;
   var $scope;
+  var $timeout;
   var template;
 
   // setup our app for testing
   beforeEach(module("myApp"));
 
   // inject services required for testing the directive
-  beforeEach(inject(function(_$compile_, _$rootScope_) {
+  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_) {
     $compile = _$compile_;
     $scope = _$rootScope_.$new();
+    $timeout = _$timeout_;
     template = '<kitten></kitten>';
   }));
 
@@ -37,11 +39,22 @@ describe('kitten', function(){
   it("uses given height and width attributes", function() {
     template = '<div><kitten width="200" height="100"></kitten></div>';
     var image = render().find("img");
-    expect(image.attr("src")).toEqual("http://placekitten.com/200/100")
+    expect(image.attr("src")).toEqual("http://placekitten.com/200/100");
   });
 
   // it("fails this test", function() {
   //   expect(false).toBeTrue();
   // });
+
+  it("changes on click", function() {
+    var element = render();
+    var image = element.find("img");
+    element.triggerHandler('click­');
+
+    $timeout(function(){
+      expect(image.hasClass('tada')).toBe(true);
+      expect(image.attr('src')).toEqual("http://placebeard.it/200/100");
+    }, 100);
+  });
 
 });
